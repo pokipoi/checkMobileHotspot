@@ -1,0 +1,44 @@
+@echo off
+:: uninstall.bat
+
+:: Set title and color
+title Uninstall checkMobileHotspot
+color 0A
+
+:: Get current user's startup folder path
+set "STARTUP_FOLDER=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup"
+
+:: Define destination path
+set "DEST_EXE=%STARTUP_FOLDER%\checkMobileHotspot.exe"
+
+echo ===============================
+echo  checkMobileHotspot Uninstaller
+echo ===============================
+echo.
+
+:: Check if file exists in startup folder
+if not exist "%DEST_EXE%" (
+    color 0E
+    echo Notice: 'checkMobileHotspot.exe' not found in startup folder
+    echo The program might not be installed or has already been uninstalled.
+    echo.
+    echo Press any key to exit...
+    pause >nul
+    exit /b 0
+)
+
+:: Try to delete file from startup folder
+del "%DEST_EXE%" >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    echo Uninstallation successful!
+    echo checkMobileHotspot.exe has been removed from startup folder:
+    echo %STARTUP_FOLDER%
+) else (
+    color 0C
+    echo Uninstallation failed!
+    echo Please try running this script as administrator.
+)
+
+echo.
+echo Press any key to exit...
+pause >nul
